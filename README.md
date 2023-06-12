@@ -16,3 +16,16 @@
 <img src="/Users/liuyu/Library/Application Support/typora-user-images/截屏2023-06-12 10.04.59.png" zoom="60%" align="left"></img>
 
 
+
+- 点击验证码登陆时，隐藏checkbox记住密码框
+
+```java
+cb_password = findViewById(R.id.cb_password);
+
+// 设置不可见
+cb_password.setVisibility(View.GONE);
+  
+// 设置可见
+cd_password.setVisibility(View.VISIBLE);
+```
+
