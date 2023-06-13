@@ -43,6 +43,7 @@
             android:textSize="@dimen/common_font_size"/>
 
         <EditText
+            android:id="@+id/et_pNumber"
             android:layout_width="0dp"
             android:layout_weight="3"
             android:layout_height="match_parent"
@@ -103,8 +104,15 @@
         android:text="@string/remember_password"/>
 
     <Button
+        android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_layout_height"
         android:text="@string/login"/>
+
+    <Button
+        android:id="@+id/btn_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试"/>
 
 </LinearLayout>

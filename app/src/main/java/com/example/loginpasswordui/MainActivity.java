@@ -2,27 +2,32 @@ package com.example.loginpasswordui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.google.android.material.transition.Hold;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.prefs.Preferences;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     RadioGroup rg_login;
     TextView tv_passOrSMS;
+    EditText et_pNumber;
     EditText et_passOrSMS;
     Button btn_forgetPass;
+    Button btn_test;
     CheckBox cb_rememberPass;
+    Button btn_login;
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +36,16 @@ public class MainActivity extends AppCompatActivity {
 
         rg_login = findViewById(R.id.rg_login);
         tv_passOrSMS = findViewById(R.id.tv_passOrSMS);
+        et_pNumber = findViewById(R.id.et_pNumber);
         et_passOrSMS = findViewById(R.id.et_passOrSMS);
         btn_forgetPass = findViewById(R.id.btn_forgetPass);
+        btn_test = findViewById(R.id.btn_test);
         cb_rememberPass = findViewById(R.id.cb_rememberPass);
+        btn_login = findViewById(R.id.btn_login);
+
+        preferences = getSharedPreferences("config", Context.MODE_PRIVATE);
+
+        btn_test.setBackgroundResource(R.drawable.shape_oval);
 
         rg_login.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -66,5 +78,36 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btn_login.setOnClickListener(this);
+
+        reload();
+
+    }
+
+    private void reload() {
+        String pNumber = preferences.getString("pNumber",null);
+        if (pNumber != null){
+            et_pNumber.setText(pNumber);
+        }
+        String password = preferences.getString("password",null);
+        if (password != null){
+            et_passOrSMS.setText(password);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (cb_rememberPass.isChecked()){
+            Log.d("cb_rememberPass", "isChecked");
+
+            String pNumber = et_pNumber.getText().toString();
+            String password = et_passOrSMS.getText().toString();
+
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("pNumber",pNumber);
+            editor.putString("password",password);
+            editor.commit();
+        }
     }
 }
